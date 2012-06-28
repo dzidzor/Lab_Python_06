@@ -20,14 +20,14 @@ class Player:
         average=self.total_score()/float(len(self.scores))
         return average
 
-#torres=Player('Fernando','Torres')
-#torres_scores=[0,0,1,0,1]
-#i=0
-#for i in torres_scores:
-   # torres.add_score(i)
-   # i+=1
+torres=Player('Fernando','Torres','spain')
+torres_scores=[0,0,1,0,1]
+i=0
+for i in torres_scores:
+    torres.add_score(i)
+    i+=1
 
-#print torres.average_score()
+print torres.average_score()
 
 
         
@@ -74,22 +74,24 @@ class Match:
         self.away_scores={}
 
     def home_score(self):
-        total_score=sum(self.home_scores.score)
-        if total_score>0:
-            return total_score
-        elif total_score==0:
+        for value in self.home_scores:
+            self.home_scores[value] = [sum(self.home_scores[value])]
+        if self.home_scores[value]>0:
+            return self.home_scores[value]
+        elif self.home_scores[value]==0:
             return 0
 
     def away_score(self):
-        total_score=sum(self.away_scores.values())
-        if total_score>0:
-            return total_score
-        elif total_score==0:
+        for value in self.away_scores:
+            self.away_scores[value] = [sum(self.away_scores[value])]
+        if self.away_scores[value]>0:
+            return self.away_scores[value]
+        elif self.away_scores[value]==0:
             return 0
 
     def winner(self):
-        home=self.home_scores
-        away=self.away_scores
+        home=self.home_scores[value]
+        away=self.away_scores[value]
         if home>away:
             return 'The winner is'+" "+'%s' %(self.home_team)
         elif away>home:
@@ -101,12 +103,11 @@ class Match:
         team= Player.team.name
         if team==self.home_team:
             self.home_scores[Player]=[score]
-            euro_semi_final.home_score()
-            
-            print self.home_scores
+            return self.home_score()
         elif team==self.away_team:
             self.away_scores[Player]=[score]
-            print self.away_scores
+            return self.away_score()
+            
 
 euro_semi_final=Match('Spain','Portugal',datetime.date(2012,06,27))
 euro_semi_final.add_score(Torres,1)
@@ -114,4 +115,5 @@ euro_semi_final.add_score(Ronaldo,1)
 euro_semi_final.add_score(Torres,1)
 print euro_semi_final.winner()
   
+
 
